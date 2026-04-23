@@ -3,7 +3,16 @@
 
 @theme {
   /* Font configuration */
-  --font-primary: 'Inter', system-ui, sans-serif;
+  --font-primary: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-anton), Verdana, sans-serif;
+  --font-mono: var(--font-space-mono), monospace;
+
+  /* Theme Colors (Semantic) */
+  --color-background: #FFFFFF;
+  --color-foreground: #000000;
+  --color-border: #E5E5E5;
+  --color-muted: #737373;
+  --color-muted-foreground: #A3A3A3;
 
   /* Primary color palette - converted to modern oklch format */
   --color-primary-50: oklch(0.97 0.024 213.79);
@@ -18,12 +27,18 @@
   --color-primary-900: oklch(0.31 0.12 213.79);
   --color-primary-950: oklch(0.18 0.07 213.79);
 
-  /* Dark color */
-  --color-dark: #222222;
-
   /* Animation configuration */
   --animate-flicker: flicker 3s linear infinite;
   --animate-shimmer: shimmer 1.3s linear infinite;
+}
+
+/* Dark mode overrides using CSS standard selector */
+.dark {
+  --color-background: #000000;
+  --color-foreground: #FFFFFF;
+  --color-border: #262626;
+  --color-muted: #A3A3A3;
+  --color-muted-foreground: #737373;
 }
 
 /* Animation keyframes */
