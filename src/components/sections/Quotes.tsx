@@ -48,7 +48,7 @@ export default function Quotes() {
           <p className="quote-line">&rdquo; IT&apos;S NEVER & JUST A WEBSITE.</p>
         </div>
         <div className="overflow-hidden not-first:">
-          <p className="quote-line">EVERY <span className="underline decoration-2 md:decoration-4 underline-offset-[6px] md:underline-offset-[10px]">DETAIL</span> MATTERS.</p>
+          <p className="quote-line">EVERY <span className="underline decoration-2 md:decoration-4 underline-offset-[6px] md:underline-offset-10">DETAIL</span> MATTERS.</p>
         </div>
         <div className="overflow-hidden not-first:">
           <p className="quote-line">WE CRAFT DIGITAL EXPERIENCES.</p>
@@ -57,7 +57,7 @@ export default function Quotes() {
           <p className="quote-line">YOUR DESIGN. OUR OBSESSION.</p>
         </div>
         <div className="overflow-hidden not-first:">
-          <p className="quote-line">YOUR BRAND. OUR <span className="underline decoration-2 md:decoration-4 underline-offset-[6px] md:underline-offset-[10px]">PLAYGROUND.&rdquo;</span></p>
+          <p className="quote-line">YOUR BRAND. OUR <span className="underline decoration-2 md:decoration-4 underline-offset-4 md:underline-offset-8">PLAYGROUND.&rdquo;</span></p>
         </div>
       </div>
       {/* Bottom small text */}

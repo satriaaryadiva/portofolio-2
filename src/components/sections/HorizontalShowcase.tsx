@@ -11,24 +11,24 @@ if (typeof window !== 'undefined') {
 
 const showcaseItems = [
   {
-    title: 'Precision.',
-    desc: 'Every pixel, every line meticulously calculated to serve a purpose.',
-    image: 'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?q=80&w=1200&auto=format&fit=crop',
+    title: 'Impact.',
+    desc: 'Creating solutions that actually make a difference in how people interact with technology.',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
   },
   {
-    title: 'Scale.',
-    desc: 'Designing systems that grow seamlessly with your ambitions.',
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop',
+    title: 'Aesthetics.',
+    desc: 'Because beautiful design builds trust and elevates the human experience.',
+    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop',
   },
   {
-    title: 'Light.',
-    desc: 'Harnessing contrast to guide the eye and tell the right story.',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6199f50a09?q=80&w=1200&auto=format&fit=crop',
+    title: 'Connection.',
+    desc: 'Bridging the gap between complex systems and intuitive user journeys.',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop',
   },
   {
-    title: 'Form.',
-    desc: 'Eliminating the unnecessary so the necessary may speak.',
-    image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop',
+    title: 'Evolution.',
+    desc: 'Constantly pushing the boundaries of what is possible on the web.',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop',
   },
 ];
 
@@ -94,10 +94,10 @@ export default function HorizontalShowcase() {
         {/* Intro text block inside the track */}
         <div className='flex h-full w-[80vw] flex-col justify-center pr-12 md:w-[50vw] md:pr-24'>
            <h2 className='font-display text-5xl uppercase leading-[1.1] md:text-8xl'>
-               Our <br/> Perspective
+               Why It <br/> Matters
            </h2>
            <p className='mt-8 max-w-sm font-primary text-lg opacity-60'>
-               A visual exploration of the core tenets that drive our studio's design philosophy. Scroll to discover.
+               A personal exploration of why I design and build. It's more than just writing code; it's about solving real problems and creating meaningful digital experiences.
            </p>
         </div>
 
@@ -109,7 +109,7 @@ export default function HorizontalShowcase() {
               className='group relative flex h-full w-[70vw] flex-col justify-between overflow-hidden md:w-[45vw]'
             >
               {/* Image Container */}
-              <div className='relative h-[80%] w-full overflow-hidden shadow-2xl'>
+              <div className='relative h-[80%] w-full overflow-hidden  '>
                  <div className='absolute left-[-10%] top-0 h-full w-[120%]'>
                      <Image
                         src={item.image}

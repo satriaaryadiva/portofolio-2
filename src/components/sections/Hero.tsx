@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import * as React from 'react';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 // Register ScrollTrigger
 if (typeof window !== 'undefined') {
@@ -14,28 +14,13 @@ if (typeof window !== 'undefined') {
 // Letter configuration mapping to images
 const nameString = "SATRIA ARYA DIVA";
 
-// Map some specific indexes to have hover images next to them
-const letterImages: Record<number, string> = {
-  1: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop', // after A
-  7: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop', // after R
-  12: 'https://images.unsplash.com/photo-1600585154340-be6199f50a09?q=80&w=600&auto=format&fit=crop', // after D
-};
+// Removed unused letterImages
 
 export default function Hero() {
   const container = useRef<HTMLDivElement>(null);
   const zoomImageRef = useRef<HTMLDivElement>(null);
-  const [time, setTime] = useState('');
 
-  // Live Clock
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const now = new Date();
-      setTime(now.toLocaleTimeString('en-GB', { 
-        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false 
-      }));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+  // Live Clock removed as it's not used in rendering
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -127,7 +112,7 @@ export default function Hero() {
             className='relative w-32 h-32 md:w-56 md:h-56  overflow-hidden shadow-2xl will-change-transform'
           >
             <Image
-              src='https://images.unsplash.com/photo-1600486913747-55e5470d6f40?q=80&w=1200&auto=format&fit=crop'
+              src='/images/satria.jpg'
               alt='Transition image'
               fill
               className='object-cover'

@@ -211,10 +211,15 @@ export default function Projects() {
             <div className='mt-6 flex items-start justify-between pb-4 border-b  md:mt-8'>
               <div>
                 <h4 className='group/text relative block overflow-hidden font-display text-xl tracking-widest font-bold uppercase md:text-2xl'>
-                  <div className='transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-[-100%] group-hover:skew-y-3'>
+                  <div className='relative overflow-hidden h-[1em] block font-mono text-[9px] uppercase tracking-widest text-[#E1D4BB] opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+                    <div className='transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-full group-hover:skew-y-3'>
+                      [ VIEW PROJECT ]
+                    </div>
+                  </div>
+                  <div className='transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-full group-hover:skew-y-3'>
                     {project.title}
                   </div>
-                  <div className='absolute inset-0 translate-y-[100%] italic transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-0 group-hover:skew-y-0'>
+                  <div className='absolute inset-0 translate-y-full italic transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-0 group-hover:skew-y-0'>
                     {project.title}
                   </div>
                 </h4>

@@ -66,10 +66,10 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
   return (
     <div 
       ref={containerRef}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background text-foreground"
+      className="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-background text-foreground"
     >
       {/* Background Subtle Gradient */}
-      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_50%,_#333_0%,_transparent_70%)]" />
+      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_50%,#333_0%,transparent_70%)]" />
 
       {/* Main Content Container */}
       <div className="relative flex flex-col items-center space-y-8 w-full max-w-md px-8">
@@ -82,7 +82,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
         {/* Status Text */}
         <div 
           ref={wordRef}
-          className="font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase opacity-60 h-4 flex items-center justify-center"
+          className="font-mono text-[10px] md:text-xs  tracking-wide uppercase opacity-60 h-4 flex items-center justify-center"
         >
           {words[wordIndex]}
         </div>
@@ -90,7 +90,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
         {/* Counter */}
         <div 
           ref={counterRef}
-          className="font-display text-8xl md:text-9xl font-black italic tracking-tighter leading-none"
+          className="font-display text-8xl md:text-9xl font-black italic tracking-none leading-none"
           style={{ fontVariantNumeric: 'tabular-nums' }}
         >
           {counter.toString().padStart(2, '0')}<span className="text-[0.4em] not-italic ml-1">%</span>

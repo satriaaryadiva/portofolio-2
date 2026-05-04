@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import * as React from 'react';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 // Register ScrollTrigger
 if (typeof window !== 'undefined') {
@@ -25,21 +25,13 @@ const TECH_STACK = [
 
 export default function HeroAboutSequence() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const flyingImgRef = useRef<HTMLDivElement>(null);
   const heroPlaceholderRef = useRef<HTMLDivElement>(null);
   const aboutPlaceholderRef = useRef<HTMLDivElement>(null);
-  const [time, setTime] = useState('');
-
-  // Live Clock
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const now = new Date();
-      setTime(now.toLocaleTimeString('en-GB', { 
-        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false 
-      }));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+  const flyingImgRef = useRef<HTMLDivElement>(null);
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Live Clock removed as it's not used in rendering
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -83,8 +75,8 @@ export default function HeroAboutSequence() {
       gsap.to(flyingImgRef.current, {
         width: () => aboutPlaceholderRef.current?.offsetWidth || 0,
         height: () => aboutPlaceholderRef.current?.offsetHeight || 0,
-        x: () => getContainerOffset(aboutPlaceholderRef.current!).x,
-        y: () => getContainerOffset(aboutPlaceholderRef.current!).y,
+        x: () => aboutPlaceholderRef.current ? getContainerOffset(aboutPlaceholderRef.current).x : 0,
+        y: () => aboutPlaceholderRef.current ? getContainerOffset(aboutPlaceholderRef.current).y : 0,
         borderRadius: '8px', 
         ease: 'none', // linear feels most natural tied to scroll scrub
         scrollTrigger: {
@@ -97,28 +89,53 @@ export default function HeroAboutSequence() {
       });
 
       // 4. Parallax Text sliding to the center!
-      gsap.to('.web-left', {
-        x: '50vw', // Pull rightwards towards center
- 
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero-section',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        }
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 768px)", () => {
+        gsap.to('.web-left', {
+          x: '50vw', // Pull rightwards towards center
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.hero-section',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          }
+        });
+        
+        gsap.to('.dev-right', {
+          x: '-30vw', // Pull leftwards towards center
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.hero-section',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          }
+        });
       });
-      
-      gsap.to('.dev-right', {
-        x: '-30vw', // Pull leftwards towards center
-     
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero-section',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        }
+
+      mm.add("(max-width: 767px)", () => {
+        gsap.to('.web-left', {
+          x: '-10vw', // Subtle opposite movement
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.hero-section',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          }
+        });
+        
+        gsap.to('.dev-right', {
+          x: '10vw', // Subtle opposite movement
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.hero-section',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          }
+        });
       });
       
       // 4. About Section Text Reveal
@@ -145,10 +162,11 @@ export default function HeroAboutSequence() {
       {/* This element spans both dimensions smoothly because it is absolute purely to the sequence container! */}
       <div 
         ref={flyingImgRef} 
-        className="absolute top-0 left-0 z-40 overflow-hidden   pointer-events-none will-change-transform"
+        className="absolute top-0 left-0 z-40 overflow-hidden pointer-events-auto cursor-pointer will-change-transform"
+        onClick={() => setIsModalOpen(true)}
       >
         <Image
-          src='https://images.unsplash.com/photo-1600486913747-55e5470d6f40?q=80&w=1200&auto=format&fit=crop'
+          src='/images/satria.jpg'
           alt='Satria Arya Diva'
           fill
           className='object-cover   transition-all duration-300'
@@ -162,26 +180,26 @@ export default function HeroAboutSequence() {
       <section className='hero-section relative flex h-screen w-full flex-col justify-center px-2 pt-10 md:pt-20'>
 
         <div className='z-20 w-full flex justify-center items-center px-2 overflow-visible' style={{ marginTop: '5vh' }}>
-          <div className='hero-title font-display text-[7.5vw] font-black uppercase leading-none text-foreground text-center'  >
+          <div className='hero-title font-display text-[12vw] md:text-[7.5vw] font-black uppercase leading-none text-foreground text-center max-w-[95vw] mx-auto'>
             {nameString}
           </div>
         </div>
 
-        {/* CSS Grid for perfect layout centering */}
-        <div className='relative z-30 flex-1 flex flex-col justify-center'>
-          <div className='w-full grid grid-cols-3 items-center px-4 md:px-12'>
-            <div className='web-left text-left font-display text-[5vw] md:text-[4vw] font-black uppercase leading-none origin-left' >
+        {/* CSS Grid for perfect layout centering on Desktop, Stack on Mobile */}
+        <div className='relative z-30 flex-1 flex flex-col justify-center w-full'>
+          <div className='w-full flex flex-col items-center justify-center gap-10 md:gap-0 md:grid md:grid-cols-3 px-4 md:px-12 mt-8 md:mt-0'>
+            <div className='web-left text-center md:text-left font-display text-[15vw] md:text-[4vw] font-black uppercase leading-none z-20 w-full'>
               I AM WEB
             </div>
             
-            <div className='relative flex flex-col items-center justify-center'>
-              <span className='absolute -top-10 font-mono text-[9px] uppercase tracking-widest opacity-50'>
-                PORTFOLIO 2026
+            <div className='relative flex flex-col items-center justify-center z-10 pointer-events-auto'>
+              <span className='absolute -top-8 md:-top-10 font-mono text-[9px] uppercase tracking-widest opacity-70 w-max text-center'>
+                MEDAN , SUMATERA UTARA - INDONESIA
               </span>
-              <div ref={heroPlaceholderRef} className='w-40 h-40 md:w-80 md:h-[40vh] opacity-0' />
+              <div ref={heroPlaceholderRef} className='w-[60vw] h-[75vw] md:w-80 md:h-[40vh] opacity-0' />
             </div>
 
-            <div className='dev-right text-right font-display text-[8vw] md:text-[5vw] font-black uppercase leading-none origin-right' style={{ transform: "scaleY(1.3)" }}>
+            <div className='dev-right text-center md:text-right font-display text-[13vw] md:text-[5vw] font-black uppercase leading-none z-20 w-full' style={{ transform: "scaleY(1.3)" }}>
               DEVELOPER
             </div>
           </div>
@@ -191,34 +209,34 @@ export default function HeroAboutSequence() {
 
 
       {/* ==== ABOUT SECTION ==== */}
-      <section id="about" className='about-section relative min-h-screen w-full px-6 py-32 md:px-12 md:py-40 flex items-center'>
-        <div className='mx-auto flex w-full max-w-[1400px] flex-col justify-between gap-12 md:flex-row md:items-stretch md:gap-24'>
+      <section id="about" className='about-section relative min-h-screen w-full px-4 pt-28 pb-20 md:px-12 md:py-40 flex items-start md:items-center'>
+        <div className='mx-auto flex w-full max-w-[1400px] flex-col md:flex-row justify-between gap-8 md:items-stretch md:gap-24'>
           
           {/* Invisible Bounding Box placeholder for About target state */}
-          <div className='w-full md:w-[45%]'>
-             <div ref={aboutPlaceholderRef} className='relative aspect-3/4 w-full bg-muted/10   opacity-0' />
+          <div className='w-full flex justify-center md:block md:w-[45%]'>
+             <div ref={aboutPlaceholderRef} className='relative aspect-3/4 w-[70vw] sm:w-[60vw] md:w-full bg-muted/10 opacity-0 rounded-2xl' />
           </div>
 
           {/* Right Text Column */}
-          <div className='flex w-full flex-col justify-center md:w-[55%] z-20'>
+          <div className='flex w-full flex-col justify-center md:w-[55%] z-20 mt-6 md:mt-0'>
             <div className='about-reveal mb-8 flex items-center space-x-6 font-mono text-[10px] uppercase tracking-widest opacity-50 md:mb-12 md:text-xs'>
               <div className='h-px w-12 bg-foreground md:w-24' />
               <span>ABOUT ME</span>
             </div>
 
-            <div className='mb-8'>
-              <h2 className='about-reveal font-display text-6xl font-bold uppercase md:text-5xl lg:text-[3.5vw]'>
-                Satria  Arya Diva
+            <div className='mb-6 md:mb-8'>
+              <h2 className='about-reveal font-display text-5xl font-bold uppercase md:text-5xl lg:text-[3.5vw]'>
+                Satria Arya Diva
               </h2>
             </div>
 
-            <div className='mb-8'>
-              <h3 className='about-reveal font-display text-xl font-medium tracking-tight text-muted-foreground md:text-3xl'>
+            <div className='mb-6 md:mb-8'>
+              <h3 className='about-reveal font-display text-lg md:text-xl font-medium tracking-tight text-muted-foreground  '>
                 A Dedicated <span className='text-foreground underline decoration-1 underline-offset-4'>UI Developer</span>
               </h3>
             </div>
 
-            <div className='max-w-xl space-y-6 font-sans text-base leading-relaxed opacity-80 md:text-lg'>
+            <div className='max-w-xl space-y-4 md:space-y-6 font-sans text-sm leading-relaxed opacity-80 md:text-lg'>
               <p className='about-reveal'>
                 I specialize in crafting premium digital experiences and interactive designs built entirely from scratch. Rejecting cookie-cutter templates, I focus on building robust, high-performance web applications that leave a lasting impression.
               </p>
@@ -253,22 +271,23 @@ export default function HeroAboutSequence() {
             </div>
 
             {/* HOBBIES SECTION */}
-            <div className='about-reveal mt-8 flex flex-wrap items-center gap-3 max-w-xl'>
-              <span className='font-mono text-[10px] uppercase tracking-widest opacity-50 mr-2'>
+            <div className='about-reveal mt-8 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 max-w-xl'>
+              <span className='font-mono text-[10px] uppercase tracking-widest opacity-50 mb-1 sm:mb-0 sm:mr-2'>
                 BEYOND WORK —
               </span>
-             
-              <div className='  border border-foreground/20 px-4 py-1.5 font-mono text-[15px] uppercase tracking-widest text-foreground/80 transition-all hover:bg-foreground hover:text-background cursor-grab'>
-                ☕ COFFEE
-              </div>
-              <div className='  border border-foreground/20 px-4 py-1.5 font-mono text-[15px] uppercase tracking-widest text-foreground/80 transition-all hover:bg-foreground hover:text-background cursor-grab'>
-                💻 CODE
-              </div>
-              <div className='  border border-foreground/20 px-4 py-1.5 font-mono text-[15px] uppercase tracking-widest text-foreground/80 transition-all hover:bg-foreground hover:text-background cursor-grab'>
-                🎮 GAMING
-              </div>
-              <div className='  border border-foreground/20 px-4 py-1.5 font-mono text-[15px] uppercase tracking-widest text-foreground/80 transition-all    hover:bg-foreground hover:text-background  cursor-grab'>
-                🎧 MUSIC
+              <div className='flex flex-wrap gap-2'>
+                <div className='border border-foreground/20 px-3 py-1.5 md:px-4 md:py-1.5 font-mono text-[12px] md:text-[15px] uppercase tracking-widest text-foreground/80 transition-all hover:bg-foreground hover:text-background cursor-grab'>
+                  ☕ COFFEE
+                </div>
+                <div className='border border-foreground/20 px-3 py-1.5 md:px-4 md:py-1.5 font-mono text-[12px] md:text-[15px] uppercase tracking-widest text-foreground/80 transition-all hover:bg-foreground hover:text-background cursor-grab'>
+                  💻 CODE
+                </div>
+                <div className='border border-foreground/20 px-3 py-1.5 md:px-4 md:py-1.5 font-mono text-[12px] md:text-[15px] uppercase tracking-widest text-foreground/80 transition-all hover:bg-foreground hover:text-background cursor-grab'>
+                  🎮 GAMING
+                </div>
+                <div className='border border-foreground/20 px-3 py-1.5 md:px-4 md:py-1.5 font-mono text-[12px] md:text-[15px] uppercase tracking-widest text-foreground/80 transition-all hover:bg-foreground hover:text-background cursor-grab'>
+                  🎧 MUSIC
+                </div>
               </div>
             </div>
 
@@ -309,6 +328,34 @@ export default function HeroAboutSequence() {
         </div>
       </section>
 
+      {/* Modal Overlay */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 z-100 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-opacity duration-300"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div 
+            className="relative w-full max-w-2xl aspect-3/4 md:aspect-square rounded-xl overflow-hidden shadow-2xl scale-100 transition-transform duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src='/images/satria.jpg'
+              alt='Satria Arya Diva Modal'
+              fill
+              className='object-cover'
+              priority
+            />
+            <button 
+              className="absolute top-4 right-4 z-50 p-2 bg-black/50 hover:bg-black text-white rounded-full transition-colors"
+              onClick={() => setIsModalOpen(false)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

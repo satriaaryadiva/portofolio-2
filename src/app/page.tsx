@@ -5,7 +5,9 @@ import * as React from 'react';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import Preloader from '@/components/Preloader';
+import ContactCTA from '@/components/sections/ContactCTA';
 import Expertise from '@/components/sections/Expertise';
+import FAQ from '@/components/sections/FAQ';
 import HeroAboutSequence from '@/components/sections/HeroAboutSequence';
 import HorizontalShowcase from '@/components/sections/HorizontalShowcase';
 import Marquee from '@/components/sections/Marquee';
@@ -37,6 +39,8 @@ export default function HomePage() {
           <HorizontalShowcase />
           <Expertise/>
           <Services />
+          <FAQ />
+          <ContactCTA />
           <Footer />
         </main>
       </SmoothScroll>

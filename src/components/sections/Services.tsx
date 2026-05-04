@@ -70,7 +70,7 @@ export default function Services() {
     >
       <div className='max-w-[1400px]'>
         <div className='mb-20 grid grid-cols-1 gap-10 md:grid-cols-2'>
-          <h2 className='services-header-text font-mono text-4xl font-bold uppercase tracking-tighter md:text-6xl'>
+        <h2 className='services-header-text font-mono text-4xl font-bold uppercase tracking-tighter md:text-6xl'>
             Our <br /> Expertise
           </h2>
           <p className='services-header-text max-w-md font-primary text-lg leading-relaxed opacity-70'>
@@ -86,11 +86,11 @@ export default function Services() {
               <div className='service-item group flex flex-col justify-between py-4 md:flex-row md:items-start'>
                 <div className='flex items-start space-x-12'>
                   <span className='font-mono text-xs opacity-40'>{service.id}</span>
-                  <h3 className='relative block overflow-hidden font-display text-3xl font-medium uppercase md:text-4xl'>
-                    <div className='transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-[-100%] group-hover:skew-y-3'>
+                  <h3 className='relative block overflow-hidden font-display text-3xl font-medium uppercase md:text-4xl h-[1.1em] w-full'>
+                    <div className='transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-full group-hover:skew-y-3 origin-left'>
                       {service.title}
                     </div>
-                    <div className='absolute inset-0 translate-y-[100%] italic transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-0 group-hover:skew-y-0'>
+                    <div className='absolute inset-0 italic opacity-0 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-y-full group-hover:translate-y-0 group-hover:opacity-100 group-hover:skew-y-0 origin-left'>
                       {service.title}
                     </div>
                   </h3>

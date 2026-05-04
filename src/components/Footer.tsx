@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const [time, setTime] = useState('');
+  const [, setTime] = useState('');
 
   // Live Clock
   useEffect(() => {
