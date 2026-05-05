@@ -38,10 +38,10 @@ export default function Footer() {
           
           {/* Left: Follow */}
           <div className='flex flex-col space-y-2 md:space-y-4'>
-            {['Instagram', 'LinkedIn', 'Behance', 'Email'].map((social) => (
+            {['Instagram', 'LinkedIn', 'Whatsapp', 'Email'].map((social) => (
               <a 
                 key={social} 
-                href='#' 
+                href={social === 'Whatsapp' ? 'https://wa.me/6283867691938' : social === 'Instagram' ? 'https://www.instagram.com/satriadiva/' : social === 'LinkedIn' ? 'https://www.linkedin.com/in/satria-arya-diva-4b73b6163/' : 'https://www.gmail.com/'} 
                 className='group relative inline-flex overflow-hidden font-mono text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight'
               >
                 <div className='transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-full'>

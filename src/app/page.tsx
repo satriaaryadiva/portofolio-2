@@ -11,6 +11,7 @@ import FAQ from '@/components/sections/FAQ';
 import HeroAboutSequence from '@/components/sections/HeroAboutSequence';
 import HorizontalShowcase from '@/components/sections/HorizontalShowcase';
 import Marquee from '@/components/sections/Marquee';
+ 
 import Projects from '@/components/sections/Projects';
 import Quotes from '@/components/sections/Quotes';
 import Services from '@/components/sections/Services';

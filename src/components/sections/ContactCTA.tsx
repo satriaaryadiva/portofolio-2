@@ -1,5 +1,4 @@
-'use client';
-
+ 
 'use client';
 
 import gsap from 'gsap';
@@ -158,12 +157,12 @@ export default function ContactCTA() {
         </div>
 
         {/* WhatsApp Link below */}
-        <div ref={linkRef} className="mt-24 md:mt-32">
+        <div ref={linkRef} className="mt-10 md:mt-20">
            <a 
-             href="https://wa.me/6282245781440" 
+             href="https://wa.me/6283867691938" 
              target="_blank" 
              rel="noopener noreferrer"
-             className="group relative inline-flex items-center space-x-3 font-mono text-[10px] md:text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+             className="group relative inline-flex items-center space-x-3 font-mono text-[10px] md:text-xs uppercase tracking-widest opacity-90 hover:opacity-100 transition-opacity"
            >
              <span>PREFER WHATSAPP? MESSAGE ME DIRECTLY</span>
              <span className="transition-transform duration-300 group-hover:translate-x-2 group-hover:-translate-y-2">↗</span>

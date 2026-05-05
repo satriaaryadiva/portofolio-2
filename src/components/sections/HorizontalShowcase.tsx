@@ -94,9 +94,9 @@ export default function HorizontalShowcase() {
         {/* Intro text block inside the track */}
         <div className='flex h-full w-[80vw] flex-col justify-center pr-12 md:w-[50vw] md:pr-24'>
            <h2 className='font-display text-5xl uppercase leading-[1.1] md:text-8xl'>
-               Why It <br/> Matters
+               What  <br/> Matters To Me
            </h2>
-           <p className='mt-8 max-w-sm font-primary text-lg opacity-60'>
+           <p className='mt-8 max-w-sm font-primary text-lg opacity-90'>
                A personal exploration of why I design and build. It's more than just writing code; it's about solving real problems and creating meaningful digital experiences.
            </p>
         </div>
@@ -106,7 +106,7 @@ export default function HorizontalShowcase() {
           {showcaseItems.map((item, index) => (
             <div 
               key={index} 
-              className='group relative flex h-full w-[70vw] flex-col justify-between overflow-hidden md:w-[45vw]'
+              className='group relative flex h-full w-[90vw] flex-col justify-between overflow-hidden md:w-[45vw]'
             >
               {/* Image Container */}
               <div className='relative h-[80%] w-full overflow-hidden  '>
@@ -122,11 +122,11 @@ export default function HorizontalShowcase() {
               </div>
               
               {/* Text Meta */}
-              <div className='flex w-full items-end justify-between pt-6 border-b border-background/20 pb-4'>
+              <div className='flex w-full items-end justify-between pt-6 border-b border-background  pb-4'>
                  <div>
                     <h3 className='font-display text-3xl uppercase md:text-5xl'>{item.title}</h3>
                  </div>
-                 <p className='max-w-[200px] text-right font-mono text-[10px] uppercase opacity-50 md:text-xs'>
+                 <p className='max-w-[200px] text-right font-mono text-[10px] uppercase font-bold  md:text-xs'>
                      {item.desc}
                  </p>
               </div>

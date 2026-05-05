@@ -13,29 +13,36 @@ if (typeof window !== 'undefined') {
 
 const projects = [
   {
-    title: 'matera',
-    badge: 'MATERA',
-    category: 'Architecture & Branding',
-    image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1200&auto=format&fit=crop',
-    year: '2023',
-    color: 'bg-blue-600',
+    title: 'SHOKA',
+    badge: 'SHOKA',
+    category: 'Landing Page & WebApp',
+    image: '/images/shoka-ne.png',
+    year: '2024',
+    color: 'bg-yellow-400',
+    textColor: 'text-black',
+    imageClass: 'object-contain',
+    bgClass: 'bg-[#f7df1e]',
   },
   {
     title: 'CHAИCE',
     badge: 'CHANCE',
     category: 'Motion Design',
-    image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1200&auto=format&fit=crop',
+    image: '/images/artifindo3.png',
     year: '2024',
-    color: 'bg-yellow-400',
-    textColor: 'text-black',
+    color: 'bg-blue-400',
+    textColor: 'text-white',
+    imageClass: 'object-contain',
+    bgClass: 'bg-blue-400',
   },
   {
     title: 'SILVR',
     badge: 'SILVR',
     category: 'Fintech Solutions',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6199f50a09?q=80&w=1200&auto=format&fit=crop',
+    image: '/images/purrheart.png',
     year: '2023',
     color: 'bg-cyan-500',
+    imageClass: 'object-contain',
+    bgClass: 'bg-fuchsia-700',
   },
   {
     title: 'intramuros',
@@ -169,7 +176,7 @@ export default function Projects() {
           Selected <br /> Works
         </h2>
         <div className='mt-6 font-mono text-xs uppercase tracking-widest md:mt-0 opacity-60'>
-          (04) Projects in 2024
+          Projects in 2024
         </div>
       </div>
 
@@ -177,20 +184,20 @@ export default function Projects() {
         {projects.map((project, index) => (
           <div 
             key={index} 
-            className='project-item group relative cursor-pointer overflow-hidden rounded-sm'
+            className='project-item group relative cursor-pointer overflow-hidden  '
             onMouseEnter={() => setActiveProject({ title: project.title, color: project.color })}
             onMouseLeave={() => setActiveProject(null)}
           >
             {/* Image Container matching screenshot style */}
-            <div className='relative aspect-square overflow-hidden bg-muted'>
-              <div className='project-img h-full w-full transition-all duration-700 ease-out group-hover:scale-115  '>
-                <div className='project-img-inner absolute inset-0 top-[-15%] h-[130%] w-full'>
+            <div className={`relative aspect-square overflow-hidden ${project.bgClass || 'bg-muted'}`}>
+              <div className='project-img h-full w-full transition-all duration-700 ease-out group-hover:scale-90'>
+                <div className='project-img-inner absolute inset-0 top-[-5%] h-[110%] w-full'>
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
-                    className='object-cover'
+                    className={project.imageClass || 'object-cover'}
                   />
                 </div>
               </div>

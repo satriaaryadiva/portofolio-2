@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import * as React from 'react';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState ,useEffect } from 'react';
 
 // Register ScrollTrigger
 if (typeof window !== 'undefined') {
@@ -29,16 +29,32 @@ export default function HeroAboutSequence() {
   const aboutPlaceholderRef = useRef<HTMLDivElement>(null);
   const flyingImgRef = useRef<HTMLDivElement>(null);
   
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const heroTextPlaceholderRef = useRef<HTMLDivElement>(null);
+  const aboutTextPlaceholderRef = useRef<HTMLDivElement>(null);
+  const flyingTextRef = useRef<HTMLDivElement>(null);
   
-  // Live Clock removed as it's not used in rendering
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       
-      // 1. Hero Text Entrance (Top)
-      gsap.from('.hero-title', {
-        y: '80%', opacity: 0, duration: 1.5, ease: 'power4.out', delay: 0.1,
+      // 1. Hero Text Entrance (Top) - Cinematic Blur & Scale
+      gsap.fromTo(flyingTextRef.current, 
+        { y: 50, opacity: 0, scale: 0.95, filter: 'blur(10px)' },
+        { y: 0, opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.8, ease: 'power4.out', delay: 0.2 }
+      );
+
+      gsap.fromTo('.hero-subtitle',
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 1.2 }
+      );
+
+      gsap.to('.scroll-indicator', {
+        y: 10,
+        repeat: -1,
+        yoyo: true,
+        duration: 1.5,
+        ease: 'power1.inOut'
       });
 
       if (!flyingImgRef.current || !heroPlaceholderRef.current || !aboutPlaceholderRef.current) return;
@@ -88,12 +104,48 @@ export default function HeroAboutSequence() {
         }
       });
 
-      // 4. Parallax Text sliding to the center!
+      // 3.5. The SEAMLESS Scroll Transition for TEXT (Hero to About!)
+      const setInitialTextPos = () => {
+        const hp = heroTextPlaceholderRef.current;
+        if (!hp || !flyingTextRef.current) return;
+        const initialPos = getContainerOffset(hp);
+        
+        gsap.set(flyingTextRef.current, {
+          x: initialPos.x + hp.offsetWidth / 2, // Center align in hero
+          y: initialPos.y,
+          xPercent: -50,
+          fontSize: window.innerWidth >= 768 ? '7.5vw' : '12vw',
+        });
+      };
+      setInitialTextPos();
+
+      gsap.to(flyingTextRef.current, {
+        x: () => aboutTextPlaceholderRef.current ? getContainerOffset(aboutTextPlaceholderRef.current).x : 0,
+        y: () => aboutTextPlaceholderRef.current ? getContainerOffset(aboutTextPlaceholderRef.current).y : 0,
+        xPercent: 0, // Left align in about
+        fontSize: () => {
+          if (!aboutTextPlaceholderRef.current) return '48px';
+          return window.innerWidth >= 1024 ? '3.5vw' : '48px';
+        },
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero-section',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+          invalidateOnRefresh: true,
+        }
+      });
+
+      // 4. Kinetic Typography Parallax!
       const mm = gsap.matchMedia();
       mm.add("(min-width: 768px)", () => {
         gsap.to('.web-left', {
-          x: '50vw', // Pull rightwards towards center
-          ease: 'none',
+          x: '40vw', 
+          rotationZ: 15,
+          skewX: -20,
+          opacity: 0,
+          ease: 'power1.in',
           scrollTrigger: {
             trigger: '.hero-section',
             start: 'top top',
@@ -103,8 +155,11 @@ export default function HeroAboutSequence() {
         });
         
         gsap.to('.dev-right', {
-          x: '-30vw', // Pull leftwards towards center
-          ease: 'none',
+          x: '-20vw', 
+          rotationZ: -15,
+          skewX: 20,
+          opacity: 0,
+          ease: 'power1.in',
           scrollTrigger: {
             trigger: '.hero-section',
             start: 'top top',
@@ -116,7 +171,9 @@ export default function HeroAboutSequence() {
 
       mm.add("(max-width: 767px)", () => {
         gsap.to('.web-left', {
-          x: '-10vw', // Subtle opposite movement
+          x: '-10vw', 
+          rotationZ: 10,
+          opacity: 0,
           ease: 'none',
           scrollTrigger: {
             trigger: '.hero-section',
@@ -127,26 +184,40 @@ export default function HeroAboutSequence() {
         });
         
         gsap.to('.dev-right', {
-          x: '10vw', // Subtle opposite movement
+          x: '10vw', 
+          rotationZ: -10,
+          opacity: 0,
           ease: 'none',
           scrollTrigger: {
             trigger: '.hero-section',
             start: 'top top',
             end: 'bottom top',
-            scrub: true,
           }
         });
       });
       
-      // 4. About Section Text Reveal
-      gsap.from('.about-reveal', {
-        y: 60,
-
-        stagger: 0.1,
-        ease: 'power3.out',
+      // 5. Highlighter Text Scrub Reveal
+      gsap.to('.about-text-scrub', {
+        backgroundSize: '100% 100%',
+        ease: 'none',
+        stagger: 0.5,
         scrollTrigger: {
           trigger: '.about-section',
-          start: 'top 100%', 
+          start: 'top 50%',
+          end: 'center center',
+          scrub: true,
+        }
+      });
+
+      // 5. Massive Background Text Parallax
+      gsap.to('.about-bg-text', {
+        y: '-20vh',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.about-section',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
         }
       });
 
@@ -156,7 +227,7 @@ export default function HeroAboutSequence() {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative w-full bg-background text-foreground transition-colors duration-500">
+    <div ref={containerRef} className="relative w-full bg-background text-foreground transition-colors duration-500 overflow-hidden">
       
       {/* --- THE MASTER SHARED IMAGE --- */}
       {/* This element spans both dimensions smoothly because it is absolute purely to the sequence container! */}
@@ -176,12 +247,24 @@ export default function HeroAboutSequence() {
       </div>
 
 
+      {/* --- THE MASTER SHARED TEXT --- */}
+      <div 
+        ref={flyingTextRef}
+        className="absolute top-0 left-0 z-50 font-display font-black uppercase leading-none text-foreground origin-top-left whitespace-nowrap pointer-events-none will-change-transform"
+      >
+        {nameString}
+      </div>
+
+
       {/* ==== HERO SECTION ==== */}
       <section className='hero-section relative flex h-screen w-full flex-col justify-center px-2 pt-10 md:pt-20'>
 
-        <div className='z-20 w-full flex justify-center items-center px-2 overflow-visible' style={{ marginTop: '5vh' }}>
-          <div className='hero-title font-display text-[12vw] md:text-[7.5vw] font-black uppercase leading-none text-foreground text-center max-w-[95vw] mx-auto'>
-            {nameString}
+        <div className='hero-title-container z-20 w-full flex flex-col justify-center items-center px-2 overflow-visible relative' style={{ marginTop: '5vh' }}>
+          {/* Invisible placeholder for the flying text */}
+          <div ref={heroTextPlaceholderRef} className='w-full max-w-[95vw] h-[12vw] md:h-[7.5vw] opacity-0' />
+          
+          <div className='hero-subtitle mt-4 font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] opacity-60 text-center'>
+          MEDAN , SUMATERA UTARA - INDONESIA
           </div>
         </div>
 
@@ -194,7 +277,7 @@ export default function HeroAboutSequence() {
             
             <div className='relative flex flex-col items-center justify-center z-10 pointer-events-auto'>
               <span className='absolute -top-8 md:-top-10 font-mono text-[9px] uppercase tracking-widest opacity-70 w-max text-center'>
-                MEDAN , SUMATERA UTARA - INDONESIA
+               
               </span>
               <div ref={heroPlaceholderRef} className='w-[60vw] h-[75vw] md:w-80 md:h-[40vh] opacity-0' />
             </div>
@@ -205,12 +288,21 @@ export default function HeroAboutSequence() {
           </div>
         </div>
 
+        {/* Scroll Indicator */}
+        <div className='absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center opacity-50 z-20'>
+          <span className='font-mono text-[8px] md:text-[10px] uppercase tracking-widest mb-2'>SCROLL</span>
+          <div className='scroll-indicator w-[1px] h-12 bg-foreground/50'></div>
+        </div>
+
       </section>
 
-
       {/* ==== ABOUT SECTION ==== */}
-      <section id="about" className='about-section relative min-h-screen w-full px-4 pt-28 pb-20 md:px-12 md:py-40 flex items-start md:items-center'>
-        <div className='mx-auto flex w-full max-w-[1400px] flex-col md:flex-row justify-between gap-8 md:items-stretch md:gap-24'>
+      <section id="about" className='about-section relative min-h-screen w-full px-4 pt-28 pb-20 md:px-12 md:py-40 flex items-start md:items-center overflow-hidden'>
+        
+        {/* Massive Background Typography */}
+     
+
+        <div className='mx-auto flex w-full max-w-[1400px] flex-col md:flex-row justify-between gap-8 md:items-stretch md:gap-24 relative z-10'>
           
           {/* Invisible Bounding Box placeholder for About target state */}
           <div className='w-full flex justify-center md:block md:w-[45%]'>
@@ -224,8 +316,9 @@ export default function HeroAboutSequence() {
               <span>ABOUT ME</span>
             </div>
 
-            <div className='mb-6 md:mb-8'>
-              <h2 className='about-reveal font-display text-5xl font-bold uppercase md:text-5xl lg:text-[3.5vw]'>
+            <div className='mb-6 md:mb-8 relative'>
+              {/* Invisible placeholder for the flying text to land on */}
+              <h2 ref={aboutTextPlaceholderRef} className='about-reveal font-display text-5xl font-bold uppercase md:text-5xl lg:text-[3.5vw] opacity-0'>
                 Satria Arya Diva
               </h2>
             </div>
@@ -236,11 +329,17 @@ export default function HeroAboutSequence() {
               </h3>
             </div>
 
-            <div className='max-w-xl space-y-4 md:space-y-6 font-sans text-sm leading-relaxed opacity-80 md:text-lg'>
-              <p className='about-reveal'>
+            <div className='max-w-xl space-y-8 md:space-y-10 font-sans text-sm leading-relaxed font-semibold md:text-lg'>
+              <p 
+                className='about-text-scrub inline-block bg-gradient-to-r from-foreground to-foreground bg-no-repeat text-foreground/20' 
+                style={{ backgroundSize: '0% 100%', WebkitBackgroundClip: 'text' }}
+              >
                 I specialize in crafting premium digital experiences and interactive designs built entirely from scratch. Rejecting cookie-cutter templates, I focus on building robust, high-performance web applications that leave a lasting impression.
               </p>
-              <p className='about-reveal'>
+              <p 
+                className='about-text-scrub inline-block bg-gradient-to-r from-foreground to-foreground bg-no-repeat text-foreground/20' 
+                style={{ backgroundSize: '0% 100%', WebkitBackgroundClip: 'text' }}
+              >
                 With a deep obsession for smooth animations, meticulous typography, and flawless user interactions, my goal is to bridge the gap between abstract design concepts and highly functional, production-ready code.
               </p>
             </div>
