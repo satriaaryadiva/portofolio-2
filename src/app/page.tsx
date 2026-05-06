@@ -16,6 +16,7 @@ import Projects from '@/components/sections/Projects';
 import Quotes from '@/components/sections/Quotes';
 import Services from '@/components/sections/Services';
 import SmoothScroll from '@/components/SmoothScroll';
+import ScrollProgress from '@/components/ScrollProgress';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -44,6 +45,7 @@ export default function HomePage() {
           <ContactCTA />
           <Footer />
         </main>
+        <ScrollProgress />
       </SmoothScroll>
     </>
   );

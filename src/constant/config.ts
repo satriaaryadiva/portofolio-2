@@ -1,7 +1,7 @@
 export const siteConfig = {
-  title: 'Next.js + Tailwind CSS + TypeScript Starter',
+  title: 'Satria Arya Diva | Creative Web Developer',
   description:
-    'A starter for Next.js, Tailwind CSS, and TypeScript with Absolute Import, Seo, Link component, pre-configured with Husky',
+    'Portfolio of Satria Arya Diva, a Web Developer based in Medan, Indonesia. Specializing in high-end, premium web experiences, GSAP animations, and modern frontend architecture.',
   /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
-  url: 'https://tsnext-tw.thcl.dev',
+  url: 'https://satriaaryadiva.com', // Ganti dengan URL domain asli jika sudah ada
 };

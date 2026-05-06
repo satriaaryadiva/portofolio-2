@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.title}`,
   },
   description: siteConfig.description,
+  keywords: ['Satria Arya Diva', 'Web Developer', 'Frontend Developer', 'Medan', 'Indonesia', 'Portfolio', 'GSAP', 'Next.js', 'React', 'Creative Developer'],
+  authors: [{ name: 'Satria Arya Diva', url: siteConfig.url }],
+  creator: 'Satria Arya Diva',
   robots: { index: true, follow: true },
   icons: {
     icon: '/favicon/favicon.ico',

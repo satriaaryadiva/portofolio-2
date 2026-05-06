@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import Link from 'next/link';
 import * as React from 'react';
-import { useEffect, useLayoutEffect, useRef, useState,useCallback } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 // Register ScrollTrigger
 if (typeof window !== 'undefined') {
@@ -98,7 +98,7 @@ export default function Projects() {
   const extraTriggersRef = useRef<ScrollTrigger[]>([]);
   const isAnimatingRef = useRef(false);
 
-  const applyTiltEffect = useCallback((items: any[]) => {
+  const applyTiltEffect = useCallback((items: Element[]) => {
     items.forEach(item => {
       const el = item as HTMLElement;
       const imgWrapper = el.querySelector('.project-image-wrapper') as HTMLElement;
@@ -226,7 +226,7 @@ export default function Projects() {
         }
       });
       
-      applyTiltEffect(initialItems);
+      applyTiltEffect(initialItems as Element[]);
 
       // Enhance Scroll Parallax for Images
       initialItems.forEach((item) => {
@@ -289,7 +289,7 @@ export default function Projects() {
       ctxRef.current?.revert();
       extraTriggersRef.current.forEach(st => st.kill());
     };
-  }, []);
+  }, [applyTiltEffect]);
 
   // Handle visibility transitions for the follower
   useEffect(() => {
@@ -321,7 +321,7 @@ export default function Projects() {
           }
         });
         
-        applyTiltEffect(extraItems);
+        applyTiltEffect(extraItems as Element[]);
 
         const mm = gsap.matchMedia();
         mm.add("(min-width: 768px)", () => {
@@ -345,7 +345,7 @@ export default function Projects() {
     });
 
     // 1. Fade out View All Button
-    tl.to(viewAllBtnRef.current, { opacity: 0, duration: 0.4, ease: 'power3.inOut', onComplete: () => { viewAllBtnRef.current!.style.display = 'none'; } }, 0);
+    tl.to(viewAllBtnRef.current, { opacity: 0, duration: 0.4, ease: 'power3.inOut', onComplete: () => { if (viewAllBtnRef.current) viewAllBtnRef.current.style.display = 'none'; } }, 0);
 
     // 2. Animate wrapper height to auto
     tl.fromTo(extraWrapperRef.current, 
@@ -375,8 +375,10 @@ export default function Projects() {
     const tl = gsap.timeline({
       onComplete: () => {
         // Show View All Button again
-        viewAllBtnRef.current!.style.display = 'block';
-        gsap.to(viewAllBtnRef.current, { opacity: 1, duration: 0.5 });
+        if (viewAllBtnRef.current) {
+          viewAllBtnRef.current.style.display = 'block';
+          gsap.to(viewAllBtnRef.current, { opacity: 1, duration: 0.5 });
+        }
         
         // Scroll back up to the top of the projects section smoothly
         if (container.current) {
@@ -392,7 +394,7 @@ export default function Projects() {
     });
 
     // 1. Hide Close Button
-    tl.to(closeBtnRef.current, { opacity: 0, y: 20, duration: 0.4, ease: 'power3.in', onComplete: () => { closeBtnRef.current!.style.display = 'none'; } }, 0);
+    tl.to(closeBtnRef.current, { opacity: 0, y: 20, duration: 0.4, ease: 'power3.in', onComplete: () => { if (closeBtnRef.current) closeBtnRef.current.style.display = 'none'; } }, 0);
 
     // 2. Animate items out
     tl.to(extraItems, { y: 50, opacity: 0, stagger: -0.05, duration: 0.5, ease: 'power2.in' }, 0);

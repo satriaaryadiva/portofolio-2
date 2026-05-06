@@ -266,8 +266,12 @@ export default function HeroAboutSequence() {
           {/* Invisible placeholder for the flying text */}
           <div ref={heroTextPlaceholderRef} className='w-full max-w-[95vw] h-[12vw] md:h-[7.5vw] opacity-0' />
           
-          <div className='hero-subtitle mt-4 font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] opacity-60 text-center'>
-          MEDAN , SUMATERA UTARA - INDONESIA
+          <div className='hero-subtitle mt-8 md:mt-16 font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] opacity-60 flex items-center justify-center gap-2'>
+            <svg className="h-3 w-3 md:h-4 md:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>MEDAN , SUMATERA UTARA - INDONESIA</span>
           </div>
         </div>
 
