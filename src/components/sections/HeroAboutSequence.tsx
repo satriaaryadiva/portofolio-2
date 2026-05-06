@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import * as React from 'react';
-import { useLayoutEffect, useRef, useState ,useEffect } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 // Register ScrollTrigger
 if (typeof window !== 'undefined') {
@@ -291,7 +291,7 @@ export default function HeroAboutSequence() {
         {/* Scroll Indicator */}
         <div className='absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center opacity-50 z-20'>
           <span className='font-mono text-[8px] md:text-[10px] uppercase tracking-widest mb-2'>SCROLL</span>
-          <div className='scroll-indicator w-[1px] h-12 bg-foreground/50'></div>
+          <div className='scroll-indicator w-px h-12 bg-foreground/50'></div>
         </div>
 
       </section>
@@ -331,13 +331,13 @@ export default function HeroAboutSequence() {
 
             <div className='max-w-xl space-y-8 md:space-y-10 font-sans text-sm leading-relaxed font-semibold md:text-lg'>
               <p 
-                className='about-text-scrub inline-block bg-gradient-to-r from-foreground to-foreground bg-no-repeat text-foreground/20' 
+                className='about-text-scrub inline-block bg-linear-to-rrom-foreground to-foreground bg-no-repeat text-foreground/20' 
                 style={{ backgroundSize: '0% 100%', WebkitBackgroundClip: 'text' }}
               >
                 I specialize in crafting premium digital experiences and interactive designs built entirely from scratch. Rejecting cookie-cutter templates, I focus on building robust, high-performance web applications that leave a lasting impression.
               </p>
               <p 
-                className='about-text-scrub inline-block bg-gradient-to-r from-foreground to-foreground bg-no-repeat text-foreground/20' 
+                className='about-text-scrub inline-block bg-linear-to-r from-foreground to-foreground bg-no-repeat text-foreground/20' 
                 style={{ backgroundSize: '0% 100%', WebkitBackgroundClip: 'text' }}
               >
                 With a deep obsession for smooth animations, meticulous typography, and flawless user interactions, my goal is to bridge the gap between abstract design concepts and highly functional, production-ready code.

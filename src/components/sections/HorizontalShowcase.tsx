@@ -37,6 +37,8 @@ export default function HorizontalShowcase() {
   const trackRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
     const ctx = gsap.context(() => {
       const track = trackRef.current;
       if (!track) return;
@@ -44,40 +46,44 @@ export default function HorizontalShowcase() {
       // Get total width to scroll (total width of track minus viewport width)
       const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
 
-      // Horizontal Scroll Animation
-      const tween = gsap.to(track, {
-        x: getScrollAmount,
-        ease: 'none',
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: () => `+=${getScrollAmount() * -1}`, // The duration of the scroll
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true, // Recalculates on resize
+        }
       });
 
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: () => `+=${getScrollAmount() * -1}`, // The duration of the scroll
-        pin: true,
-        animation: tween,
-        scrub: 1,
-        invalidateOnRefresh: true, // Recalculates on resize
-      });
+      // Horizontal Scroll Animation
+      tl.to(track, {
+        x: getScrollAmount,
+        ease: 'none',
+      }, 0);
       
       // Image Parallax within the horizontal scroll
       const images = gsap.utils.toArray('.showcase-img');
-      images.forEach((img) => {
-          gsap.to(img as HTMLElement, {
-              xPercent: -20,
-              ease: 'none',
-              scrollTrigger: {
-                  trigger: sectionRef.current,
-                  start: 'top top',
-                  end: () => `+=${getScrollAmount() * -1}`,
-                  scrub: 1,
-              }
-          });
-      });
+      if (images.length) {
+        tl.to(images, {
+            xPercent: -20,
+            ease: 'none',
+        }, 0);
+      }
+
+      // Refresh ScrollTrigger after a short delay to account for layout shifts
+      // caused by lazy-loaded images in the added projects above this section.
+      timeoutId = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 800);
 
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      clearTimeout(timeoutId);
+      ctx.revert();
+    };
   }, []);
 
   return (
