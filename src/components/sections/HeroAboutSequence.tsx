@@ -38,26 +38,7 @@ export default function HeroAboutSequence() {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       
-      // 1. Hero Text Entrance (Top) - Cinematic Blur & Scale
-      gsap.fromTo(flyingTextRef.current, 
-        { y: 50, opacity: 0, scale: 0.95, filter: 'blur(10px)' },
-        { y: 0, opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.8, ease: 'power4.out', delay: 0.2 }
-      );
-
-      gsap.fromTo('.hero-subtitle',
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 1.2 }
-      );
-
-      gsap.to('.scroll-indicator', {
-        y: 10,
-        repeat: -1,
-        yoyo: true,
-        duration: 1.5,
-        ease: 'power1.inOut'
-      });
-
-      if (!flyingImgRef.current || !heroPlaceholderRef.current || !aboutPlaceholderRef.current) return;
+      if (!flyingImgRef.current || !heroPlaceholderRef.current || !aboutPlaceholderRef.current || !heroTextPlaceholderRef.current || !flyingTextRef.current) return;
 
       // Helper to calculate absolute X/Y within the wrapper container
       const getContainerOffset = (el: HTMLElement) => {
@@ -71,7 +52,7 @@ export default function HeroAboutSequence() {
         return { x, y };
       };
 
-      // 2. Set the initial state of the shared image onto the Hero placeholder
+      // 1. Set Initial Positions for Image and Text
       const setInitialPos = () => {
         const hp = heroPlaceholderRef.current;
         if (!hp || !flyingImgRef.current) return;
@@ -85,7 +66,43 @@ export default function HeroAboutSequence() {
         });
       };
       
+      const setInitialTextPos = () => {
+        const hp = heroTextPlaceholderRef.current;
+        if (!hp || !flyingTextRef.current) return null;
+        const initialPos = getContainerOffset(hp);
+        
+        gsap.set(flyingTextRef.current, {
+          x: initialPos.x + hp.offsetWidth / 2, // Center align in hero
+          y: initialPos.y,
+          xPercent: -50,
+          fontSize: window.innerWidth >= 768 ? '7.5vw' : '12vw',
+        });
+        return initialPos;
+      };
+
       setInitialPos();
+      const textInitialPos = setInitialTextPos();
+
+      // 2. Entrance Animations
+      if (textInitialPos) {
+        gsap.fromTo(flyingTextRef.current, 
+          { y: textInitialPos.y + 50, opacity: 0, scale: 0.95, filter: 'blur(10px)' },
+          { y: textInitialPos.y, opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.8, ease: 'power4.out', delay: 0.2 }
+        );
+      }
+
+      gsap.fromTo('.hero-subtitle',
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 1.2 }
+      );
+
+      gsap.to('.scroll-indicator', {
+        y: 10,
+        repeat: -1,
+        yoyo: true,
+        duration: 1.5,
+        ease: 'power1.inOut'
+      });
 
       // 3. The SEAMLESS Scroll Transition (Image moves from Hero to About!)
       gsap.to(flyingImgRef.current, {
@@ -105,20 +122,6 @@ export default function HeroAboutSequence() {
       });
 
       // 3.5. The SEAMLESS Scroll Transition for TEXT (Hero to About!)
-      const setInitialTextPos = () => {
-        const hp = heroTextPlaceholderRef.current;
-        if (!hp || !flyingTextRef.current) return;
-        const initialPos = getContainerOffset(hp);
-        
-        gsap.set(flyingTextRef.current, {
-          x: initialPos.x + hp.offsetWidth / 2, // Center align in hero
-          y: initialPos.y,
-          xPercent: -50,
-          fontSize: window.innerWidth >= 768 ? '7.5vw' : '12vw',
-        });
-      };
-      setInitialTextPos();
-
       gsap.to(flyingTextRef.current, {
         x: () => aboutTextPlaceholderRef.current ? getContainerOffset(aboutTextPlaceholderRef.current).x : 0,
         y: () => aboutTextPlaceholderRef.current ? getContainerOffset(aboutTextPlaceholderRef.current).y : 0,

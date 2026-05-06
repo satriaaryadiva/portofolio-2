@@ -38,9 +38,9 @@ const projects = [
     bgClass: 'bg-blue-400',
   },
   {
-    title: 'SILVR',
-    badge: 'SILVR',
-    category: 'Fintech Solutions',
+    title: 'PURREHART',
+    badge: 'PURRHEART',
+    category: 'Web App LIVE Donation',
     image: '/images/purrheart.png',
     url: 'https://example.com/silvr',
     year: '2023',
