@@ -75,7 +75,7 @@ export default function HeroAboutSequence() {
           x: initialPos.x + hp.offsetWidth / 2, // Center align in hero
           y: initialPos.y,
           xPercent: -50,
-          fontSize: window.innerWidth >= 768 ? '7.5vw' : '12vw',
+          fontSize: window.innerWidth >= 768 ? '7.5vw' : '9vw',
         });
         return initialPos;
       };
@@ -122,7 +122,15 @@ export default function HeroAboutSequence() {
       });
 
       // 3.5. The SEAMLESS Scroll Transition for TEXT (Hero to About!)
-      gsap.to(flyingTextRef.current, {
+      gsap.fromTo(flyingTextRef.current, {
+        x: () => {
+          if (!heroTextPlaceholderRef.current) return 0;
+          return getContainerOffset(heroTextPlaceholderRef.current).x + heroTextPlaceholderRef.current.offsetWidth / 2;
+        },
+        y: () => heroTextPlaceholderRef.current ? getContainerOffset(heroTextPlaceholderRef.current).y : 0,
+        xPercent: -50,
+        fontSize: () => window.innerWidth >= 768 ? '7.5vw' : '9vw',
+      }, {
         x: () => aboutTextPlaceholderRef.current ? getContainerOffset(aboutTextPlaceholderRef.current).x : 0,
         y: () => aboutTextPlaceholderRef.current ? getContainerOffset(aboutTextPlaceholderRef.current).y : 0,
         xPercent: 0, // Left align in about
@@ -143,7 +151,9 @@ export default function HeroAboutSequence() {
       // 4. Kinetic Typography Parallax!
       const mm = gsap.matchMedia();
       mm.add("(min-width: 768px)", () => {
-        gsap.to('.web-left', {
+        gsap.fromTo('.web-left', {
+          x: '0vw', rotationZ: 0, skewX: 0, opacity: 1
+        }, {
           x: '40vw', 
           rotationZ: 15,
           skewX: -20,
@@ -157,11 +167,14 @@ export default function HeroAboutSequence() {
           }
         });
         
-        gsap.to('.dev-right', {
+        gsap.fromTo('.dev-right', {
+          x: '0vw', rotationZ: 0, skewX: 0, opacity: 1, scaleY: 1.3
+        }, {
           x: '-20vw', 
           rotationZ: -15,
           skewX: 20,
           opacity: 0,
+          scaleY: 1.3,
           ease: 'power1.in',
           scrollTrigger: {
             trigger: '.hero-section',
@@ -173,7 +186,9 @@ export default function HeroAboutSequence() {
       });
 
       mm.add("(max-width: 767px)", () => {
-        gsap.to('.web-left', {
+        gsap.fromTo('.web-left', {
+          x: '0vw', rotationZ: 0, opacity: 1
+        }, {
           x: '-10vw', 
           rotationZ: 10,
           opacity: 0,
@@ -186,15 +201,19 @@ export default function HeroAboutSequence() {
           }
         });
         
-        gsap.to('.dev-right', {
+        gsap.fromTo('.dev-right', {
+          x: '0vw', rotationZ: 0, opacity: 1, scaleY: 1.3
+        }, {
           x: '10vw', 
           rotationZ: -10,
           opacity: 0,
+          scaleY: 1.3,
           ease: 'none',
           scrollTrigger: {
             trigger: '.hero-section',
             start: 'top top',
             end: 'bottom top',
+            scrub: true,
           }
         });
       });
@@ -264,7 +283,7 @@ export default function HeroAboutSequence() {
 
         <div className='hero-title-container z-20 w-full flex flex-col justify-center items-center px-2 overflow-visible relative' style={{ marginTop: '5vh' }}>
           {/* Invisible placeholder for the flying text */}
-          <div ref={heroTextPlaceholderRef} className='w-full max-w-[95vw] h-[12vw] md:h-[7.5vw] opacity-0' />
+          <div ref={heroTextPlaceholderRef} className='w-full max-w-[95vw] h-[9vw] md:h-[7.5vw] opacity-0' />
           
           <div className='hero-subtitle mt-8 md:mt-16 font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] opacity-60 flex items-center justify-center gap-2'>
             <svg className="h-3 w-3 md:h-4 md:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -277,7 +296,7 @@ export default function HeroAboutSequence() {
 
         {/* CSS Grid for perfect layout centering on Desktop, Stack on Mobile */}
         <div className='relative z-30 flex-1 flex flex-col justify-center w-full'>
-          <div className='w-full flex flex-col items-center justify-center gap-10 md:gap-0 md:grid md:grid-cols-3 px-4 md:px-12 mt-8 md:mt-0'>
+          <div className='w-full flex flex-col items-center justify-center gap-10 md:gap-0 md:grid md:grid-cols-3 px-4 md:px-12 mt-16 md:mt-0'>
             <div className='web-left text-center md:text-left font-display text-[15vw] md:text-[4vw] font-black uppercase leading-none z-20 w-full'>
               I AM WEB
             </div>
@@ -289,7 +308,7 @@ export default function HeroAboutSequence() {
               <div ref={heroPlaceholderRef} className='w-[60vw] h-[75vw] md:w-80 md:h-[40vh] opacity-0' />
             </div>
 
-            <div className='dev-right text-center md:text-right font-display text-[13vw] md:text-[5vw] font-black uppercase leading-none z-20 w-full' style={{ transform: "scaleY(1.3)" }}>
+            <div className='dev-right text-center md:text-right font-display text-[13vw] md:text-[5vw] font-black uppercase leading-none z-20 w-full'>
               DEVELOPER
             </div>
           </div>
@@ -338,7 +357,7 @@ export default function HeroAboutSequence() {
 
             <div className='max-w-xl space-y-8 md:space-y-10 font-sans text-sm leading-relaxed font-semibold md:text-lg'>
               <p 
-                className='about-text-scrub inline-block bg-linear-to-rrom-foreground to-foreground bg-no-repeat text-foreground/20' 
+                className='about-text-scrub inline-block bg-linear-to-r from-foreground to-foreground bg-no-repeat text-foreground/20' 
                 style={{ backgroundSize: '0% 100%', WebkitBackgroundClip: 'text' }}
               >
                 I specialize in crafting premium digital experiences and interactive designs built entirely from scratch. Rejecting cookie-cutter templates, I focus on building robust, high-performance web applications that leave a lasting impression.

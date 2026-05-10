@@ -14,6 +14,18 @@ if (typeof window !== 'undefined') {
 
 const projects = [
   {
+    title: 'V1 PORTFOLIO',
+    badge: 'PREVIOUS PORTFOLIO',
+    category: 'Creative Developer Portfolio',
+    image: '/images/porto.png',
+    url: '#',
+    year: '2023',
+    color: 'bg-zinc-600',
+    textColor: 'text-white',
+    imageClass: 'object-cover',
+    bgClass: 'bg-zinc-900',
+  },
+  {
     title: 'SHOKA',
     badge: 'SHOKA',
     category: 'Design & Landing Page ',
@@ -72,18 +84,7 @@ const projects = [
     imageClass: 'object-contain',
     bgClass: 'bg-emerald-600',
   },
-  {
-    title: 'ARTIFINDO',
-    badge: 'ARTIFINDO SOLAR',
-    category: 'Green Energy',
-    image: '/images/hero-bg.png',
-    url: 'https://example.com/artifindo-solar',
-    year: '2024',
-    color: 'bg-zinc-800',
-    textColor: 'text-white',
-    imageClass: 'object-cover',
-    bgClass: 'bg-black',
-  },
+ 
 ];
 
 export default function Projects() {

@@ -12,12 +12,12 @@ const links = [
   { href: '#contact', label: 'Contact' },
 ];
 
-const NavLink = ({ href, label }: { href: string; label: string }) => {
+const NavLink = ({ href, label, isActive, onClick }: { href: string; label: string; isActive?: boolean; onClick?: () => void }) => {
   return (
-    <Link href={href} className="group relative block overflow-hidden font-mono text-[10px] md:text-[11px] font-bold uppercase tracking-[0.15em] text-foreground">
+    <Link href={href} onClick={onClick} className={`group relative block overflow-hidden font-mono text-[10px] md:text-[11px] font-bold uppercase tracking-[0.15em] ${isActive ? 'text-foreground' : 'text-foreground/50 hover:text-foreground'} transition-colors duration-300`}>
       <div className="relative h-[1.2em] overflow-hidden">
         <div className="transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-1/2">
-          <span className="block h-[1.2em] leading-[1.2em] opacity-60 group-hover:opacity-100 transition-opacity duration-300">{label}</span>
+          <span className={`block h-[1.2em] leading-[1.2em] ${isActive ? 'opacity-100' : 'opacity-60'} group-hover:opacity-100 transition-opacity duration-300`}>{label}</span>
           <span className="block h-[1.2em] leading-[1.2em] opacity-100 italic">{label}</span>
         </div>
       </div>
@@ -27,11 +27,32 @@ const NavLink = ({ href, label }: { href: string; label: string }) => {
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const lastScrollY = useRef(0);
   const isVisible = useRef(true);
   
   const navRef = useRef<HTMLElement>(null);
   const btnRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  // Scroll Spy for active section
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    }, { rootMargin: '-40% 0px -60% 0px' });
+
+    document.querySelectorAll('section[id]').forEach((section) => {
+      observer.observe(section);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!navRef.current) return;
@@ -43,7 +64,7 @@ export default function Navbar() {
       setIsScrolled(currentScrollY > 50);
       
       // GSAP Hide/Show logic for Smart Navbar
-      if (currentScrollY > lastScrollY.current && currentScrollY > 150) {
+      if (currentScrollY > lastScrollY.current && currentScrollY > 150 && !isMobileMenuOpen) {
         // Scrolling down -> Hide
         if (isVisible.current) {
           isVisible.current = false;
@@ -74,7 +95,7 @@ export default function Navbar() {
     handleScroll();
     
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMobileMenuOpen]);
 
   useLayoutEffect(() => {
     if (!navRef.current) return;
@@ -128,10 +149,34 @@ export default function Navbar() {
     };
   }, []);
 
+  // Mobile menu animation
+  useEffect(() => {
+    if (!mobileMenuRef.current) return;
+    
+    if (isMobileMenuOpen) {
+      gsap.to(mobileMenuRef.current, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power3.out'
+      });
+      document.body.style.overflow = 'hidden';
+    } else {
+      gsap.to(mobileMenuRef.current, {
+        autoAlpha: 0,
+        y: -20,
+        duration: 0.4,
+        ease: 'power2.in'
+      });
+      document.body.style.overflow = '';
+    }
+  }, [isMobileMenuOpen]);
+
   return (
-    <header 
-      ref={navRef}
-      className={`fixed top-0 z-50 w-full transition-[padding] duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] ${
+    <>
+      <header 
+        ref={navRef}
+        className={`fixed top-0 z-[100] w-full transition-[padding] duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] ${
         isScrolled ? 'px-4 py-4 md:px-8 md:py-6' : 'px-6 py-6 md:px-12 md:py-10'
       }`}
     >
@@ -144,7 +189,8 @@ export default function Navbar() {
         {/* Logo */}
         <Link 
           href='/' 
-          className='nav-anim group font-display text-lg md:text-xl font-bold uppercase tracking-wider text-foreground flex overflow-hidden'
+          onClick={() => setIsMobileMenuOpen(false)}
+          className='nav-anim group font-display text-lg md:text-xl font-bold uppercase tracking-wider text-foreground flex overflow-hidden relative z-50'
         >
           <div className="relative h-[1em] overflow-hidden">
              <div className="transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-1/2 flex flex-col">
@@ -158,13 +204,13 @@ export default function Navbar() {
         <ul className='hidden items-center space-x-10 md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
           {links.map(({ href, label }) => (
             <li key={label} className='nav-anim'>
-              <NavLink href={href} label={label} />
+              <NavLink href={href} label={label} isActive={activeSection === href.replace('#', '')} />
             </li>
           ))}
         </ul>
 
         {/* Actions */}
-        <div className='flex items-center space-x-4 md:space-x-8'>
+        <div className='flex items-center space-x-4 md:space-x-8 relative z-50'>
           <div className='nav-anim'>
             <ThemeToggle />
           </div>
@@ -185,10 +231,42 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu Toggle */}
-        <div className='nav-anim font-mono text-[10px] font-bold uppercase tracking-widest text-foreground md:hidden'>
-           [ MENU ]
-        </div>
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className='nav-anim font-mono text-[10px] font-bold uppercase tracking-widest text-foreground md:hidden relative z-50'
+        >
+           [ {isMobileMenuOpen ? 'CLOSE' : 'MENU'} ]
+        </button>
       </div>
     </header>
+
+    {/* Mobile Menu Overlay */}
+    <div 
+      ref={mobileMenuRef}
+      className="fixed inset-0 z-[90] bg-background/85 backdrop-blur-3xl flex flex-col justify-center items-center opacity-0 invisible"
+    >
+      <ul className='flex flex-col items-center space-y-8'>
+        {links.map(({ href, label }) => (
+          <li key={label}>
+            <NavLink 
+              href={href} 
+              label={label} 
+              isActive={activeSection === href.replace('#', '')} 
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+          </li>
+        ))}
+        <li className="pt-8">
+          <Link 
+            href='#contact' 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className='inline-flex rounded-full border border-foreground bg-foreground px-8 py-4 text-background font-mono text-xs font-bold uppercase tracking-widest transition-colors duration-500 hover:bg-background hover:text-foreground'
+          >
+            Let's Talk
+          </Link>
+        </li>
+      </ul>
+    </div>
+  </>
   );
 }
