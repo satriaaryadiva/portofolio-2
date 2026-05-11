@@ -1,8 +1,9 @@
 'use client';
 
-import Link from 'next/link';
-import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
+import Link from 'next/link';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+
 import ThemeToggle from './ThemeToggle';
 
 const links = [
@@ -176,7 +177,7 @@ export default function Navbar() {
     <>
       <header 
         ref={navRef}
-        className={`fixed top-0 z-[100] w-full transition-[padding] duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] ${
+        className={`fixed top-0 z-100 w-full transition-[padding] duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] ${
         isScrolled ? 'px-4 py-4 md:px-8 md:py-6' : 'px-6 py-6 md:px-12 md:py-10'
       }`}
     >
@@ -243,7 +244,7 @@ export default function Navbar() {
     {/* Mobile Menu Overlay */}
     <div 
       ref={mobileMenuRef}
-      className="fixed inset-0 z-[90] bg-background/85 backdrop-blur-3xl flex flex-col justify-center items-center opacity-0 invisible"
+      className="fixed inset-0 z-90 bg-background/85 backdrop-blur-3xl flex flex-col justify-center items-center opacity-0 invisible"
     >
       <ul className='flex flex-col items-center space-y-8'>
         {links.map(({ href, label }) => (

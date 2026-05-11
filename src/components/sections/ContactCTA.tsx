@@ -150,7 +150,7 @@ export default function ContactCTA() {
           <h3 className="font-display text-4xl md:text-5xl lg:text-7xl font-bold mb-6 tracking-tight text-balance leading-[1.1]">
             Got a project in mind? <br className="hidden md:block" />
             <span className="text-muted-foreground">Let's create </span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 via-emerald-400 to-green-500 animate-[pulse_4s_ease-in-out_infinite]">magic.</span>
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-green-500 via-emerald-400 to-green-500 animate-[pulse_4s_ease-in-out_infinite]">magic.</span>
           </h3>
           
           <p className="font-sans text-base md:text-xl opacity-70 leading-relaxed text-balance max-w-2xl mx-auto">
@@ -173,7 +173,7 @@ export default function ContactCTA() {
            <div className="w-[90vw] md:w-[70vw] max-w-[900px] h-[80px] md:h-0 overflow-hidden md:group-hover:h-[200px] transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] relative z-10 rounded-[100px] my-4 md:my-0 md:group-hover:my-8 bg-foreground text-background shadow-2xl ring-1 ring-foreground/10 group-hover:ring-foreground/30">
                
                {/* Decorative Inner Glow / Gradient */}
-               <div className="absolute inset-0 bg-gradient-to-b from-background/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+               <div className="absolute inset-0 bg-linear-to-b from-background/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
                {/* Content inside the expanded pill */}
                <div className="absolute inset-0 flex flex-col items-center justify-center w-full h-full px-4">
@@ -211,7 +211,7 @@ export default function ContactCTA() {
              className="group relative inline-flex items-center space-x-4 bg-foreground text-background px-8 py-4 rounded-full font-mono text-xs md:text-sm uppercase tracking-widest overflow-hidden hover:scale-105 transition-transform duration-500 shadow-lg hover:shadow-2xl hover:shadow-green-500/10"
            >
              {/* Slide-up gradient background on hover */}
-             <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-green-600 to-emerald-500 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]" />
+             <div className="absolute inset-0 w-full h-full bg-linear-to-r from-green-600 to-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]" />
              
              <span className="relative z-10 flex items-center space-x-4">
                <span>Message on WhatsApp</span>

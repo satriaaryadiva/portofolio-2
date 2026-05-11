@@ -5,18 +5,19 @@ import * as React from 'react';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import Preloader from '@/components/Preloader';
+import ScrollProgress from '@/components/ScrollProgress';
+import SmoothScroll from '@/components/SmoothScroll';
+
 import ContactCTA from '@/components/sections/ContactCTA';
 import Expertise from '@/components/sections/Expertise';
 import FAQ from '@/components/sections/FAQ';
 import HeroAboutSequence from '@/components/sections/HeroAboutSequence';
 import HorizontalShowcase from '@/components/sections/HorizontalShowcase';
 import Marquee from '@/components/sections/Marquee';
- 
+import Playground from '@/components/sections/Playground';
 import Projects from '@/components/sections/Projects';
 import Quotes from '@/components/sections/Quotes';
 import Services from '@/components/sections/Services';
-import SmoothScroll from '@/components/SmoothScroll';
-import ScrollProgress from '@/components/ScrollProgress';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -35,12 +36,14 @@ export default function HomePage() {
         <main className={isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-1000'}>
           <Navbar />
           <HeroAboutSequence />
+           <Playground />
           <Marquee />
           <Quotes />
           <Projects />
           <HorizontalShowcase />
           <Expertise/>
           <Services />
+         
           <FAQ />
           <ContactCTA />
           <Footer />

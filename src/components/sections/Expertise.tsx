@@ -7,49 +7,46 @@ import { useEffect, useRef, useState } from 'react';
 
 const expertiseItems = [
   {
-    title: 'WEB DEVELOPMENT ',
-    desc: 'ECOMMERCE,COMPANY PROFILE,WEBAPP,CMS',
+    title: 'WEB DEVELOPMENT',
+    desc: 'ECOMMERCE · COMPANY PROFILE · WEBAPP · CMS',
     image: 'https://images.unsplash.com/photo-1600585154340-be6199f50a09?q=80&w=800&auto=format&fit=crop',
   },
   {
     title: 'BRANDING',
-    desc: 'IDENTITY',
+    desc: 'IDENTITY · LOGO · VISUAL SYSTEM',
     image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop',
   },
   {
     title: 'WEBFLOW',
-    desc: 'INTEGRATION',
+    desc: 'CMS · INTEGRATION · NO-CODE',
     image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=800&auto=format&fit=crop',
   },
   {
     title: 'UI/UX DESIGN',
-    desc: 'EXPERIENCE',
+    desc: 'FIGMA · WIREFRAME · PROTOTYPE',
     image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=800&auto=format&fit=crop',
   },
   {
     title: 'GSAP ANIMATIONS',
-    desc: 'MOTION',
+    desc: 'MOTION · SCROLL · INTERACTION',
     image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop',
   },
   {
     title: '3D & MOTION',
-    desc: 'RENDER',
+    desc: 'THREE.JS · BLENDER · RENDER',
     image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
   },
- 
   {
     title: 'SEO & CONTENT',
-    desc: 'RANKING',
+    desc: 'RANKING · AUDIT · STRATEGY',
     image: 'https://images.unsplash.com/photo-1432821596592-e2c18b78144f?q=80&w=800&auto=format&fit=crop',
   },
 ];
 
 export default function Expertise() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const imageRevealRef = useRef<HTMLDivElement>(null);
+  const containerRef    = useRef<HTMLDivElement>(null);
+  const imageRevealRef  = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  // Image reveals now statically positioned on the left, so we don't need mouse tracking
 
   useEffect(() => {
     if (!imageRevealRef.current) return;
@@ -57,12 +54,13 @@ export default function Expertise() {
     if (hoveredIndex !== null) {
       const items = containerRef.current?.querySelectorAll('.expertise-item');
       if (items && items[hoveredIndex]) {
-        const el = items[hoveredIndex] as HTMLElement;
-        const rect = el.getBoundingClientRect();
+        const el      = items[hoveredIndex] as HTMLElement;
+        const rect    = el.getBoundingClientRect();
         const targetY = rect.top + rect.height / 2;
 
         gsap.to(imageRevealRef.current, {
           y: targetY,
+          xPercent: -50,
           scale: 1,
           yPercent: -50,
           opacity: 1,
@@ -72,6 +70,7 @@ export default function Expertise() {
       }
     } else {
       gsap.to(imageRevealRef.current, {
+        xPercent: -50,
         scale: 0.9,
         yPercent: -50,
         opacity: 0,
@@ -82,23 +81,25 @@ export default function Expertise() {
   }, [hoveredIndex]);
 
   return (
-    <section 
+    <section
       ref={containerRef}
-      className='relative flex min-h-screen w-full flex-col items-center  justify-center bg-background px-6 py-20 text-foreground transition-colors duration-300 md:py-32'
+      className="relative flex min-h-screen w-full flex-col items-center justify-center bg-background px-4 py-20 text-foreground transition-colors duration-300 md:px-12 md:py-32 overflow-hidden"
     >
-      <div className='absolute left-6 top-10 flex items-center space-x-6 font-mono text-[10px] uppercase tracking-widest opacity-50 md:left-12 md:top-20 md:text-xs'>
-        <div className='h-px w-12 bg-foreground md:w-24' />
-        <span className=''>MY SERVICES</span>
+      {/* Section Label */}
+      <div className="absolute left-4 top-8 flex items-center gap-4 font-mono text-[10px] uppercase tracking-widest opacity-40 md:left-12 md:top-16">
+        <div className="h-px w-8 bg-foreground md:w-16" />
+        <span>My Services</span>
       </div>
-      {/* Dynamic Cursor Image Reveal */}
-      <div 
+
+      {/* Floating Image Reveal — desktop only */}
+      <div
         ref={imageRevealRef}
-        className='pointer-events-none fixed left-[9%] md:left-[3%] top-0 z-50 h-[32vh] w-[30vw] max-w-[320px] overflow-hidden   opacity-0  '
-        style={{ transform: 'translate(0, -50%) scale(0.9)' }}
+        className="pointer-events-none fixed left-1/2 top-0 z-50 hidden h-[32vh] w-[28vw] max-w-[320px] overflow-hidden opacity-0 md:block rounded-xl  "
+        style={{ transform: 'translate(-50%, -50%) scale(0.9)' }}
       >
         {expertiseItems.map((item, index) => (
-          <div 
-            key={`img-${index}`} 
+          <div
+            key={`img-${index}`}
             className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${
               hoveredIndex === index ? 'opacity-100' : 'opacity-0'
             }`}
@@ -107,58 +108,84 @@ export default function Expertise() {
               src={item.image}
               alt={item.title}
               fill
-              className='object-cover transition-all duration-500'
-              sizes='(max-width: 768px) 50vw, 33vw'
+              className="object-cover"
+              sizes="22vw"
             />
           </div>
         ))}
       </div>
 
-      <div className='z-10 flex w-full flex-col items-center group'>
+      {/* Services List */}
+      <div className="z-10 flex w-full flex-col items-center">
         {expertiseItems.map((item, index) => (
           <div
             key={index}
-            className='expertise-item relative cursor-pointer gap-20 
-             text-center font-display text-[10vw] font-bold uppercase leading-[1.1] tracking-wide transition-all duration-300 md:text-[6.5vw]'
+            className="expertise-item group relative w-full cursor-pointer border-b border-foreground/10 first:border-t"
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
-            <div className="relative inline-flex flex-col md:flex-row items-center justify-center w-full md:w-auto">
-              <div 
-                className={`relative group/text inline-block transition-colors duration-500 ease-out h-[1.1em] overflow-hidden ${
-                  hoveredIndex === null 
-                    ? 'text-foreground' 
-                    : hoveredIndex === index 
-                      ? 'text-foreground' 
-                      : 'text-foreground/20'
-                }`}
+            <div className="flex w-full items-center justify-between gap-4 px-2 py-4 md:px-0 md:py-5">
+              {/* Number */}
+              <span className="font-mono text-[10px] tabular-nums text-foreground/30 shrink-0 md:text-xs">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+
+              {/* Title with slide animation */}
+              <div
+                className={`flex-1 font-display font-bold uppercase tracking-tighter leading-none overflow-hidden transition-colors duration-300
+                  text-[8vw] sm:text-[6vw] md:text-[4.5vw]
+                  ${hoveredIndex === null
+                    ? 'text-foreground'
+                    : hoveredIndex === index
+                    ? 'text-foreground'
+                    : 'text-foreground/20'
+                  }`}
               >
-                <div className={`transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] ${hoveredIndex === index ? '-translate-y-full skew-y-3' : 'translate-y-0'}`}>
-                  {item.title}
-                </div>
-                <div className={`absolute inset-0 italic transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] ${hoveredIndex === index ? 'translate-y-0 skew-y-0' : 'translate-y-full'}`}>
-                  {item.title}
+                <div className="relative h-[1em] overflow-hidden">
+                  <div
+                    className={`transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] ${
+                      hoveredIndex === index ? '-translate-y-full' : 'translate-y-0'
+                    }`}
+                  >
+                    {item.title}
+                  </div>
+                  <div
+                    className={`absolute inset-0 italic transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] ${
+                      hoveredIndex === index ? 'translate-y-0' : 'translate-y-full'
+                    }`}
+                  >
+                    {item.title}
+                  </div>
                 </div>
               </div>
 
-              {/* Description text that appears on hover next to the title */}
-              <span 
-                className={`absolute z-10 pointer-events-none font-mono tracking-widest text-[#E1D4BB] transition-all duration-300 word-break
-                  top-full left-1/2 -translate-x-1/2 mt-2 w-[90vw] text-center whitespace-normal text-[8px] leading-relaxed
-                  md:top-1/2 md:left-full md:-translate-y-1/2 md:translate-x-0 md:mt-0 md:ml-6 md:w-max md:text-left md:whitespace-nowrap md:text-[10px]
-                  ${hoveredIndex === index ? 'opacity-100 text-wrap scale-100' : 'opacity-0 scale-95'}
+              {/* Tag — always visible on mobile, fade-in on desktop hover */}
+              <span
+                className={`font-mono text-[9px] tracking-widest text-foreground/50 text-right shrink-0 max-w-[120px] leading-relaxed
+                  md:text-[10px] md:max-w-none md:transition-all md:duration-300
+                  ${hoveredIndex === index ? 'md:opacity-100 md:text-green-500' : 'md:opacity-40'}
                 `}
               >
                 {item.desc}
               </span>
+
+              {/* Arrow — desktop only */}
+              <svg
+                className={`hidden md:block w-5 h-5 shrink-0 transition-all duration-300 ${
+                  hoveredIndex === index ? 'translate-x-1 text-green-500' : 'text-foreground/20'
+                }`}
+                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 17L17 7M17 7H7M17 7v10" />
+              </svg>
             </div>
           </div>
         ))}
       </div>
-      
-      {/* Optional Side Label to match screenshot */}
-      <div className='absolute bottom-8 right-12 hidden font-mono text-[10px] uppercase tracking-widest opacity-30 md:block'>
-        LOS ANGELES, CA 22:50:51
+
+      {/* Bottom label */}
+      <div className="absolute bottom-6 right-4 font-mono text-[10px] uppercase tracking-widest opacity-20 md:right-12 md:bottom-8">
+        Available for projects
       </div>
     </section>
   );
