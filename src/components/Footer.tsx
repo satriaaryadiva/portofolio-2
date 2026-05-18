@@ -6,6 +6,13 @@ import { useEffect, useState } from 'react';
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const [, setTime] = useState('');
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const handleEmailClick = () => {
+    navigator.clipboard.writeText('satriaarya125@gmail.com');
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
 
   // Live Clock
   useEffect(() => {
@@ -38,35 +45,57 @@ export default function Footer() {
           
           {/* Left: Follow */}
           <div className='flex flex-col space-y-2 md:space-y-4'>
-            {['Instagram', 'LinkedIn', 'Whatsapp', 'Email'].map((social) => (
-              <a 
-                key={social} 
-                href={social === 'Whatsapp' ? 'https://wa.me/6283867691938' : social === 'Instagram' ? 'https://www.instagram.com/satriadiva/' : social === 'LinkedIn' ? 'https://www.linkedin.com/in/satria-arya-diva-4b73b6163/' : 'https://www.gmail.com/'} 
-                className='group relative inline-flex overflow-hidden font-mono text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight'
-              >
-                <div className='transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-full'>
-                  {social}
-                </div>
-                <div className='absolute inset-0 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-0 italic'>
-                  {social}
-                </div>
-              </a>
-            ))}
+            {['Instagram', 'LinkedIn', 'Whatsapp', 'Email'].map((social) => {
+              const isEmail = social === 'Email';
+              const href = social === 'Whatsapp'
+                ? 'https://wa.me/6283867691938'
+                : social === 'Instagram'
+                ? 'https://www.instagram.com/satriadiva/'
+                : social === 'LinkedIn'
+                ? 'https://www.linkedin.com/in/satria-arya-diva-39242821'
+                : 'https://mail.google.com/mail/?view=cm&fs=1&to=satriaarya125@gmail.com';
+
+              const displayText = isEmail && copiedEmail ? 'Copied!' : social;
+
+              return (
+                <a 
+                  key={social} 
+                  href={href} 
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  onClick={isEmail ? handleEmailClick : undefined}
+                  className='group relative inline-flex overflow-hidden font-mono text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight cursor-pointer'
+                >
+                  <div className='transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-full'>
+                    {displayText}
+                  </div>
+                  <div className={`absolute inset-0 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-0 italic ${isEmail && copiedEmail ? 'text-green-500' : ''}`}>
+                    {displayText}
+                  </div>
+                </a>
+              );
+            })}
           </div>
 
           {/* Right: Navigation */}
           <div className='flex flex-col items-end space-y-2 md:space-y-4 text-right'>
-            {['Home', 'Works', 'Break', 'About'].map((nav) => (
+            {[
+              { label: 'Home', href: '#' },
+              { label: 'Work', href: '#work' },
+              { label: 'About', href: '#about' },
+              { label: 'Services', href: '#services' },
+              { label: 'Contact', href: '#contact' },
+            ].map((nav) => (
               <a 
-                key={nav} 
-                href='#' 
+                key={nav.label} 
+                href={nav.href} 
                 className='group relative inline-flex overflow-hidden font-mono text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight'
               >
                 <div className='transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-full'>
-                  {nav}
+                  {nav.label}
                 </div>
                 <div className='absolute inset-0 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-0 italic'>
-                  {nav}
+                  {nav.label}
                 </div>
               </a>
             ))}

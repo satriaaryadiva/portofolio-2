@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
-import { Anton, Inter, Space_Mono } from 'next/font/google';
+import { Space_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import * as React from 'react';
 
 import '@/styles/globals.css';
@@ -7,17 +8,13 @@ import '@/styles/colors.css';
 
 import { siteConfig } from '@/constant/config';
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-});
-
-const anton = Anton({
-  subsets: ['latin'],
-  variable: '--font-anton',
-  weight: '400',
+const virgil = localFont({
+  src: '../../public/fonts/Virgil.woff2',
+  variable: '--font-virgil',
   display: 'swap',
 });
+
+
 
 const spaceMono = Space_Mono({
   weight: ['400', '700'],
@@ -70,7 +67,7 @@ export default function RootLayout({
     <html
       lang='en'
       suppressHydrationWarning
-      className={`${inter.variable} ${anton.variable} ${spaceMono.variable}`}
+      className={`${virgil.variable} ${spaceMono.variable}`}
     >
       <body className='bg-background text-foreground antialiased transition-colors duration-300'>
         <Providers>{children}</Providers>

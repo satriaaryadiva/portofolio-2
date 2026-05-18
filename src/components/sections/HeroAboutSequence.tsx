@@ -402,8 +402,9 @@ export default function HeroAboutSequence() {
               </a>
 
               <a 
-                href="/resume.pdf" 
+                href="https://www.linkedin.com/in/satria-arya-diva-39242821" 
                 target="_blank"
+                rel="noopener noreferrer"
                 className='group flex w-full sm:w-auto items-center justify-center rounded-full border border-foreground/30 px-8 py-4 transition-all hover:bg-foreground hover:text-background active:scale-95'
               >
                 <span className='relative overflow-hidden font-mono text-xs md:text-sm font-bold uppercase tracking-widest text-foreground group-hover:text-background inline-flex transition-colors'>

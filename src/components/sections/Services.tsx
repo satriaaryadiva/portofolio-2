@@ -14,7 +14,7 @@ const processSteps = [
     id: '01',
     title: 'STRATEGY',
     subtitle: 'Discovery & Architecture',
-    description: 'We don\'t just build; we engineer solutions. By deep-diving into your brand\'s core, we map out a technical and visual architecture designed to dominate your niche.',
+    description: 'I don\'t just build; I engineer solutions. By deep-diving into your brand\'s core, I map out a technical and visual architecture designed to dominate your niche.',
     bg: 'bg-background',
     text: 'text-foreground',
     accent: 'text-green-500',
@@ -44,7 +44,7 @@ const processSteps = [
     id: '04',
     title: 'LAUNCH',
     subtitle: 'Deployment & Scale',
-    description: 'We deploy lightning-fast, highly optimized web experiences. From SEO perfection to flawless accessibility, your platform is primed for exponential growth.',
+    description: 'i deploy lightning-fast, highly optimized web experiences. From SEO perfection to flawless accessibility, your platform is primed for exponential growth.',
     bg: 'bg-background',
     text: 'text-foreground',
     accent: 'text-green-500',
@@ -166,13 +166,7 @@ export default function Services() {
     <section ref={containerRef} className="relative w-full bg-background pt-20">
       
       {/* Global Scroll Progress Indicator (Desktop only) */}
-      <div className="hidden md:flex flex-col items-center fixed left-8 top-1/2 -translate-y-1/2 z-100 h-[40vh] gap-4 pointer-events-none mix-blend-difference opacity-50">
-        <span className="font-mono text-[10px] tracking-widest text-white rotate-180" style={{ writingMode: 'vertical-rl' }}>START</span>
-        <div className="relative w-px flex-1 bg-white/20">
-          <div className="process-progress-fill absolute top-0 left-0 w-full h-full bg-white origin-top scale-y-0" />
-        </div>
-        <span className="font-mono text-[10px] tracking-widest text-white rotate-180" style={{ writingMode: 'vertical-rl' }}>FINISH</span>
-      </div>
+   
 
       {/* Section Header */}
       <div className="relative z-10 px-6 md:px-12 mb-20 max-w-[1400px] mx-auto flex flex-col items-center text-center">
@@ -180,7 +174,7 @@ export default function Services() {
           ( THE PROCESS )
         </h2>
         <h3 className="font-display text-4xl md:text-6xl lg:text-8xl font-bold uppercase tracking-tighter text-balance">
-          How We Create <br />
+          How I Create <br />
           <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 to-emerald-600">Masterpieces</span>
         </h3>
       </div>
@@ -213,7 +207,7 @@ export default function Services() {
                   </div>
                   
                   <h4 className="overflow-hidden pb-4 mb-2">
-                    <div className="title-inner font-display text-6xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black uppercase tracking-tighter leading-[0.85]">
+                    <div className="title-inner font-display text-6xl sm:text-5xl md:text-8xl lg:text-[8rem] font-black uppercase tracking-tighter leading-[0.85]">
                       {step.title}
                     </div>
                   </h4>

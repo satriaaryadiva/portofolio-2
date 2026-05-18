@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useLayoutEffect,useRef, useState } from 'react';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -11,7 +11,7 @@ if (typeof window !== 'undefined') {
 const faqs = [
   {
     question: "WHAT IS YOUR TYPICAL PROCESS?",
-    answer: "Every project starts with a deep dive into your brand's core values. From there, we move into wireframing, high-fidelity design, and finally, meticulous development using modern frameworks like Next.js and GSAP for fluid animations."
+    answer: "Every project starts with a deep dive into your brand's core values. From there, I move into wireframing, high-fidelity design, and finally, meticulous development using modern frameworks like Next.js and GSAP for fluid animations."
   },
   {
     question: "HOW LONG DOES A PROJECT TAKE?",
@@ -85,7 +85,7 @@ export default function FAQ() {
               Frequently <br /> Asked
             </h2>
             <p className="faq-left-elem mt-6 font-sans text-sm md:text-base opacity-60 max-w-xs leading-relaxed">
-              Everything you need to know about how we work, project timelines, and technologies.
+              Everything you need to know about how I work, project timelines, and technologies.
             </p>
           </div>
         </div>

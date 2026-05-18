@@ -127,7 +127,7 @@ export default function ContactCTA() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full bg-background text-foreground py-24 md:py-32 flex flex-col items-center justify-center overflow-hidden cursor-default transition-colors duration-300 border-t border-border">
+    <section id="contact" ref={sectionRef} className="relative w-full bg-background text-foreground py-24 md:py-32 flex flex-col items-center justify-center overflow-hidden cursor-default transition-colors duration-300 border-t border-border">
       
       {/* Background Breathing Glow */}
       <div 
@@ -147,7 +147,7 @@ export default function ContactCTA() {
             Available for new projects
           </div>
           
-          <h3 className="font-display text-4xl md:text-5xl lg:text-7xl font-bold mb-6 tracking-tight text-balance leading-[1.1]">
+          <h3 className="font-display text-4xl md:text-4xl lg:text-4xl font-bold mb-6 tracking-tight text-balance leading-[1.1]">
             Got a project in mind? <br className="hidden md:block" />
             <span className="text-muted-foreground">Let's create </span>
             <span className="text-transparent bg-clip-text bg-linear-to-r from-green-500 via-emerald-400 to-green-500 animate-[pulse_4s_ease-in-out_infinite]">magic.</span>
@@ -165,7 +165,7 @@ export default function ContactCTA() {
           className="group flex flex-col items-center justify-center cursor-pointer w-full relative"
         >
            {/* Top Text */}
-           <h2 ref={topTextRef} className="font-display text-[16vw] md:text-[14vw] leading-[0.8] md:leading-[0.75] font-black uppercase tracking-tighter z-20 transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-2 md:group-hover:-translate-y-6">
+           <h2 ref={topTextRef} className="font-mono text-[16vw] md:text-[14vw] leading-[0.8] md:leading-[0.75] font-black uppercase tracking-tighter z-20 transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-2 md:group-hover:-translate-y-6">
              LET'S
            </h2>
 
@@ -197,7 +197,7 @@ export default function ContactCTA() {
            </div>
 
            {/* Bottom Text */}
-           <h2 ref={bottomTextRef} className="font-display text-[16vw] md:text-[14vw] leading-[0.8] md:leading-[0.75] font-black uppercase tracking-tighter z-20 transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-2 md:group-hover:translate-y-6">
+           <h2 ref={bottomTextRef} className="font-mono text-[16vw] md:text-[14vw] leading-[0.8] md:leading-[0.75] font-black uppercase tracking-tighter z-20 transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-2 md:group-hover:translate-y-6">
              TALK.
            </h2>
         </div>

@@ -82,7 +82,7 @@ export default function Quotes() {
           <p className="quote-line origin-bottom">EVERY <span className="underline decoration-2 md:decoration-4 underline-offset-[6px] md:underline-offset-10">DETAIL</span> MATTERS.</p>
         </div>
         <div className="overflow-visible not-first:">
-          <p className="quote-line origin-bottom">WE CRAFT DIGITAL EXPERIENCES.</p>
+          <p className="quote-line origin-bottom">I CRAFT DIGITAL EXPERIENCES.</p>
         </div>
         <div className="overflow-visible not-first:">
           <p className="quote-line origin-bottom">YOUR DESIGN. OUR OBSESSION.</p>
